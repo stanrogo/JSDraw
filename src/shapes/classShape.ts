@@ -3,10 +3,17 @@ import Shape from './shape';
 class ClassShape extends Shape {
 
 	className: string;
+	classNameInput: HTMLInputElement;
 
 	constructor(ctx: CanvasRenderingContext2D){
 		super(ctx);
 		this.className = '';
+		this.classNameInput = null;
+	}
+
+	mouseDown(e): (this: HTMLElement, ev: MouseEvent) => any {
+		if(this.classNameInput) this.removeInput();
+		return super.mouseDown(e);
 	}
 
 	doubleClick(e): void {
@@ -19,8 +26,19 @@ class ClassShape extends Shape {
 		input.autofocus = true;
 		input.style.left = `${e.pageX}px`;
 		input.style.top = `${e.pageY}px`;
-		input.addEventListener('blur', () => this.className = input.value);
+		input.addEventListener('keydown', (e) => {
+			if(e.key === 'Enter'){
+				this.removeInput();
+			}
+		});
 		document.body.appendChild(input);
+		this.classNameInput = input;
+	}
+
+	removeInput(){
+		this.className = this.classNameInput.value;
+		this.classNameInput.parentNode.removeChild(this.classNameInput);
+		this.classNameInput = null;
 	}
 
 	draw(): void{

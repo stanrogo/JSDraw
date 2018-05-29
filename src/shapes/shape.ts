@@ -16,15 +16,15 @@ abstract class Shape {
 
 	abstract doubleClick(e): void;
 
-	private onMove(e): void {
-		this.x = e.pageX - this.clickX;
-		this.y = e.pageY - this.clickY;
-	}
-
 	public mouseDown(e): (this: HTMLElement, ev: MouseEvent) => any {
 		if (!this.mouseInShape(e)) return null;
 		this.setClickDifference(e);
 		return this.onMove.bind(this);
+	}
+
+	private onMove(e): void {
+		this.x = e.pageX - this.clickX;
+		this.y = e.pageY - this.clickY;
 	}
 
 	protected mouseInShape(e): boolean {
