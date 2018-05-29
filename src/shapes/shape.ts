@@ -26,7 +26,7 @@ abstract class Shape {
 	}
 
 	private mouseInShape(e): boolean{
-		return e.pageX < this.x + 100 && e.pageX > this.x - 100 && e.pageY < this.y + 120 && e.pageY > this.y -120;
+		return e.pageX < this.x + 100 + 8 && e.pageX > this.x + 8 && e.pageY < this.y + 8 + 120 && e.pageY > this.y + 8;
 	}
 
 	private setClickDifference(e): void{

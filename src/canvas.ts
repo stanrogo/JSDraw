@@ -8,6 +8,8 @@ class Canvas {
 	height = 300;
 	shapes : Shape[];
 
+	lastClickTime: number = 0;
+
 	constructor(){
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
 		this.ctx = this.canvas.getContext("2d");
@@ -18,22 +20,38 @@ class Canvas {
 
 		setInterval(this.draw.bind(this), 10);
 
+		// Set drag and drop actions
 		this.canvas.onmousedown = this.mouseDown.bind(this);
 		this.canvas.onmouseup = this.mouseUp.bind(this);
+
+		// Set double click actions
+		this.canvas.onclick = this.click.bind(this);
 	}
 
 	mouseDown(e){
-		this.shapes.some((shape) => {
+		const revShapes = this.shapes.reverse();
+		revShapes.some((shape) => {
 			const event = shape.mouseDown(e);
 			if(event !== null){
 				this.canvas.onmousemove = event;
 				return true;
 			}
-		})
+		});
+		this.shapes.reverse();
 	}
 
 	mouseUp(){
 		this.canvas.onmousemove = null;
+	}
+
+	click(e){
+		const clickTime: number = Date.now();
+		if(clickTime <= this.lastClickTime + 200){
+			alert('double click');
+			this.lastClickTime = 0;
+		} else {
+			this.lastClickTime = clickTime;
+		}
 	}
 
 	clear() {
@@ -49,8 +67,8 @@ class Canvas {
 	}
 
 	resize(){
-		this.ctx.canvas.width  = window.innerWidth - 100;
-		this.ctx.canvas.height = window.innerHeight - 100;
+		this.ctx.canvas.width  = window.innerWidth - 20;
+		this.ctx.canvas.height = window.innerHeight - 20;
 		this.width = this.ctx.canvas.width;
 		this.height = this.ctx.canvas.height;
 	}
