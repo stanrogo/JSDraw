@@ -47,8 +47,8 @@ class Canvas {
 	click(e){
 		const clickTime: number = Date.now();
 		if(clickTime <= this.lastClickTime + 200){
-			alert('double click');
 			this.lastClickTime = 0;
+			this.shapes.forEach(shape => shape.doubleClick(e));
 		} else {
 			this.lastClickTime = clickTime;
 		}

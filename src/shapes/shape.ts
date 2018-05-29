@@ -14,22 +14,24 @@ abstract class Shape {
 
 	abstract draw(): void;
 
-	private onMove(e): void{
+	abstract doubleClick(e): void;
+
+	private onMove(e): void {
 		this.x = e.pageX - this.clickX;
 		this.y = e.pageY - this.clickY;
 	}
 
-	public mouseDown(e): (this: HTMLElement, ev: MouseEvent) => any{
+	public mouseDown(e): (this: HTMLElement, ev: MouseEvent) => any {
 		if (!this.mouseInShape(e)) return null;
 		this.setClickDifference(e);
 		return this.onMove.bind(this);
 	}
 
-	private mouseInShape(e): boolean{
+	protected mouseInShape(e): boolean {
 		return e.pageX < this.x + 100 + 8 && e.pageX > this.x + 8 && e.pageY < this.y + 8 + 120 && e.pageY > this.y + 8;
 	}
 
-	private setClickDifference(e): void{
+	private setClickDifference(e): void {
 		this.clickX = e.pageX - this.x;
 		this.clickY = e.pageY - this.y;
 	}
