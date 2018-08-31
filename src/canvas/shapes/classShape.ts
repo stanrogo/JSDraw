@@ -6,15 +6,19 @@
  */
 
 import Shape from './shape';
-import CanvasCoordinates from '../interfaces/CanvasCoordinates';
+import CanvasCoordinates from '../../interfaces/CanvasCoordinates';
+import ClassProps from "../../interfaces/ClassProps";
 
 class ClassShape extends Shape {
-	className: string;
+	classProps: ClassProps;
 	classNameInput: HTMLInputElement;
 
 	constructor(ctx: CanvasRenderingContext2D, location: CanvasCoordinates){
 		super(ctx, location);
-		this.className = '';
+		this.classProps = {
+            name: '',
+			methods: [],
+		};
 		this.classNameInput = null;
 	}
 
@@ -25,6 +29,10 @@ class ClassShape extends Shape {
 	mouseDown(e): void {
 		if(this.classNameInput) this.removeInput();
 		super.mouseDown(e);
+	}
+
+	mouseUp(e): void {
+
 	}
 
 	/**
@@ -54,7 +62,7 @@ class ClassShape extends Shape {
 	 * Remove the input box from the DOM
 	 */
 	removeInput(): void {
-		this.className = this.classNameInput.value;
+		this.classProps.name = this.classNameInput.value;
 		this.classNameInput.parentNode.removeChild(this.classNameInput);
 		this.classNameInput = null;
 	}
@@ -63,6 +71,7 @@ class ClassShape extends Shape {
 	 * Draw the three class sections and text properties
 	 */
 	draw(): void {
+		console.log('drawing');
 		this.ctx.fillStyle = "#FFFFFF";
 		this.ctx.beginPath();
 		this.ctx.rect(this.x, this.y, 100, 120);
@@ -90,10 +99,10 @@ class ClassShape extends Shape {
 	 * If the class has a name, draw the name
 	 */
 	drawClassName(): void {
-		if(!this.className) return;
+		if(!this.classProps.name) return;
 		this.ctx.fillStyle = "blue";
 		this.ctx.font = "bold 16px Arial";
-		this.ctx.fillText(this.className, this.x + 10, this.y + 16 + 8);
+		this.ctx.fillText(this.classProps.name, this.x + 10, this.y + 16 + 8);
 	}
 }
 

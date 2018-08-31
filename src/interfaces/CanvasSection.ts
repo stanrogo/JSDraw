@@ -1,9 +1,10 @@
 interface CanvasSection {
 	resize: () => void;
-	mousedown: (e) => void;
-	mouseup: (e) => void;
+	mouseDown: (e) => void;
+	mouseUp: (e) => void;
 	doubleClick: (e) => void;
-	mousemove: (e) => void;
+	mouseMove: (e) => void;
+	draw: () => void;
 }
 
 export default CanvasSection;

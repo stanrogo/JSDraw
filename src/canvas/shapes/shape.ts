@@ -4,9 +4,10 @@
  * @author Stanley Clark <me@stanrogo.com>
  * @version 0.0.1
  */
-import CanvasCoordinates from '../interfaces/CanvasCoordinates';
+import CanvasCoordinates from '../../interfaces/CanvasCoordinates';
+import CanvasSection from "../../interfaces/CanvasSection";
 
-abstract class Shape {
+abstract class Shape implements CanvasSection {
 	protected ctx: CanvasRenderingContext2D;
 	protected x: number; // Left coordinate of shape
 	protected y: number; // Top coordinate of shape
@@ -19,9 +20,15 @@ abstract class Shape {
 		this.y = location.top;
 	}
 
-	abstract draw(): void;
+	public abstract draw(): void;
 
-	abstract doubleClick(e): void;
+	public abstract doubleClick(e): void;
+
+    public abstract mouseUp(e): void;
+
+	public resize() {
+		this.draw();
+	}
 
 	/**
 	 * Check if the mouse is in shape and if so set x and y properties
